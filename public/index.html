@@ -1,0 +1,151 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>
+        Hello World!!
+    </h1>
+    <h1>
+Chat App
+    </h1>
+
+    <input type="text" id="message" placeholder="Enter Message"/>
+    <button id="sendBtn">Send</button>
+            <div id="messages">
+            
+            </div>
+<script src="/socket.io/socket.io.js">
+
+
+</script>
+<script>
+    const socket=io();
+
+    const sendBtn=document.getElementById("sendBtn");
+    const messageInput=document.getElementById("message");
+    const allmessages=document.getElementById("messages");
+        socket.on("arif_message", (message) => 
+        {
+            const p=document.createElement('p');
+            p.innerHTML=message;
+            allmessages.appendChild(p);
+        }
+        );
+    sendBtn.addEventListener('click',(e) =>{
+        const message=messageInput.value;
+        console.log(message);
+        socket.emit("arif_message",message)
+    })
+</script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #messages {
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #fff;
+            margin-bottom: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .user-message {
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            padding: 8px;
+            margin-bottom: 10px;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+
+        .sender-message {
+            background-color: #ccc;
+            color: #000;
+            border-radius: 5px;
+            padding: 8px;
+            margin-bottom: 10px;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 70px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Chat App</h1>
+        <div id="messages"></div>
+        <input type="text" id="message" placeholder="Enter Message">
+        <button id="sendBtn">Send</button>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const sendBtn = document.getElementById("sendBtn");
+        const messageInput = document.getElementById("message");
+        const allMessages = document.getElementById("messages");
+
+        socket.on("arif_message", (data) => {
+            const p = document.createElement('p');
+            p.textContent = data.message;
+            p.classList.add(data.sender === 'user' ? 'user-message' : 'sender-message');
+            allMessages.appendChild(p);
+        });
+
+        sendBtn.addEventListener('click', (e) => {
+            const message = messageInput.value;
+            socket.emit("arif_message", { message: message, sender: 'user' });
+            messageInput.value = ""; // Clear input after sending
+        });
+    </script>
+</body>
+</html>
